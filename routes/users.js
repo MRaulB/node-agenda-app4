@@ -16,7 +16,9 @@ router.post('/add', function (req, res, next) {
 
   var persons = require('../public/data/persons.json');
 
+  const id = new Date().getTime()
   persons.push({
+    id,
     firstName,
     lastName,
     phone
@@ -28,6 +30,7 @@ router.post('/add', function (req, res, next) {
 
   res.json({
     success: true,
+    id,
     message: 'DONE'
   });
 });
@@ -38,7 +41,7 @@ router.delete('/delete', function (req, res, next) {
 
   var persons = require('../public/data/persons.json');
 
-  var remainingPersons= persons.filter(function (person) {
+  var remainingPersons = persons.filter(function (person) {
     return person.id != id;
   })
   var str = JSON.stringify(remainingPersons, null, 2);
