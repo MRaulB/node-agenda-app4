@@ -139,7 +139,6 @@ function inlineEditPerson(id, firstName, lastName, phone) {
 }
 
 function inlineDeletePerson(id) {
-    console.warn('please refresh :)', id);
     allPersons = allPersons.filter(function(person) {
         return person.id != id;
     });
@@ -177,6 +176,17 @@ const editPerson = function(id) {
     document.querySelector('[name=phone]').value = person.phone;
     editPersonId = id;
 }
+// if one parameter can skipp pharantesis 
+// "(value)" will be "value"
+const search = value => {
+    value = value.toLowerCase().trim();
+    const filtered = allPersons.filter(person => {
+        return person.firstName.toLowerCase().includes(value) || 
+            person.lastName.toLowerCase().includes(value) ||
+            person.phone.toLowerCase().includes(value)
+    });
+    display(filtered);
+};
 
 function initEvents() {
     const tbody = document.querySelector('#agenda tbody');
@@ -191,6 +201,11 @@ function initEvents() {
             editPerson(id);
         }
     });
+     
+    const searchInput = document.getElementById('search');
+    searchInput.addEventListener('input', (e) => {
+        search(e.target.value);
+    })   
 }
 
 initEvents();
